@@ -40,7 +40,7 @@ app.get('/user/:userId?',function(req,res,next){
 
 //add new user 
 app.post('/user',(req,res,next) => {
-    User.addUser(req.body, (error,result) =>{
+    User.addUser(req.body, (error,result) => {
         if(error)
             res.json(error);
         else    
@@ -60,7 +60,7 @@ app.delete('/user/:id',(req,res,next) => {
 
 //update user 
 app.put('/user/:id',(req,res,next) =>{
-    User.updateUser(req.params.id,(error,result) =>{
+    User.updateUser(req.params.id, req.body,(error,result) =>{
         if(error)
             res.json(error);
         else 

@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
@@ -7,6 +6,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
   templateUrl: './table-list.component.html',
   styleUrls: ['./table-list.component.css']
 })
+
 export class TableListComponent implements OnInit {
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
