@@ -20,7 +20,7 @@ export class TableListComponent implements OnInit {
   constructor(private _firestoreDataService: FirestoreDataService) {
   }
   ngOnInit() {
-    this._firestoreDataService.getUsersList().subscribe( data => {
+    this._firestoreDataService.getVehicleMasterList().subscribe( data => {
       this.vehicles = data;
       console.log(this.vehicles);
       this.displayedColumns = Object.keys(this.vehicles[0]);

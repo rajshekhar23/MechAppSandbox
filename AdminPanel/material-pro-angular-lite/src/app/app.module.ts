@@ -18,6 +18,8 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { DataTablesModule } from 'angular-datatables';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     SharedModule,
     RouterModule.forRoot(AppRoutes),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    DataTablesModule
   ],
   providers: [
   {
@@ -47,4 +51,5 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

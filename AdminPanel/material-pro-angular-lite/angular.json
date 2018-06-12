@@ -21,11 +21,13 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
               "src/styles.css",
               "src/assets/styles/style.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js"
             ]
           },
           "configurations": {

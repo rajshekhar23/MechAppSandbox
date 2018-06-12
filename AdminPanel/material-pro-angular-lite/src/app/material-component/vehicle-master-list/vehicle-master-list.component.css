@@ -1,0 +1,16 @@
+.alignCenter{
+  text-align: center;
+}
+
+.mat-raised-button {
+  border-radius: 20px;
+  float: right;
+}
+
+table {
+  width: 100%;
+}
+
+.tableTitle {
+  margin:6px auto;
+}

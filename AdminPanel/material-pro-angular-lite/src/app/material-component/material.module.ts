@@ -1,3 +1,4 @@
+import { DataTablesModule } from 'angular-datatables';
 import 'hammerjs';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -29,6 +30,9 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { TableListComponent } from './table-list/table-list.component';
+import { VehicleMasterListComponent } from './vehicle-master-list/vehicle-master-list.component';
+import { ModelsListComponent } from './models-list/models-list.component';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 @NgModule({
   imports: [
@@ -39,7 +43,9 @@ import { TableListComponent } from './table-list/table-list.component';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    CdkTableModule
+    CdkTableModule,
+    DataTablesModule,
+    AngularFireDatabaseModule
   ],
   providers: [
 
@@ -65,7 +71,9 @@ import { TableListComponent } from './table-list/table-list.component';
     TooltipComponent,
     SnackbarComponent,
     SliderComponent,
-    SlideToggleComponent
+    SlideToggleComponent,
+    VehicleMasterListComponent,
+    ModelsListComponent
   ]
 })
 
