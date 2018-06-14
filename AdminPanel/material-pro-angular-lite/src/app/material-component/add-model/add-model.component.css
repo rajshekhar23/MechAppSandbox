@@ -1,0 +1,18 @@
+.example-card {
+  max-width: 400px;
+  margin:0 auto;
+}
+
+.variantTitle {
+  margin: 10px;
+}
+
+.buttonWrapper {
+  padding: 20px 0 !important;
+}
+
+button.mat-raised-button {
+  display: block;
+  width: 89%;
+  margin: 0px auto !important;
+}

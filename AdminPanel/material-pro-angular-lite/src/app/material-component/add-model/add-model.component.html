@@ -1,22 +1,20 @@
-<div class="signin-content">
-  <mat-card>
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <p>Please login to continue</p>
-        <mat-form-field class="full-width-input">
-          <input matInput placeholder="User" formControlName="userName" required>
-          <mat-error *ngIf="isFieldInvalid('userName')">
-            Please inform your user name
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="full-width-input">
-          <input matInput type="password" placeholder="Password" formControlName="password" required>
-          <mat-error *ngIf="isFieldInvalid('userName')">
-            Please inform your password
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="primary">Login</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div>
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Add Model Form</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <input matInput placeholder="Enter model name" [formControl]="modelname" required>
+      <mat-error *ngIf="modelname.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <section class="example-section">
+      <mat-checkbox class="variantTitle" [(ngModel)]="petrol">PETROL</mat-checkbox>
+      <mat-checkbox class="variantTitle" [(ngModel)]="diesel">DIESEL</mat-checkbox>
+    </section>
+  </mat-card-content>
+  <mat-card-actions class="buttonWrapper">
+    <button mat-raised-button color="warn" (click)="addModel()" class="btnAddModel">Add Model</button>
+  </mat-card-actions>
+</mat-card>

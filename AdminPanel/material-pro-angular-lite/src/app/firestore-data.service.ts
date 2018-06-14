@@ -70,18 +70,16 @@ export class FirestoreDataService implements OnInit {
     return this.models;
   }
 
-  addModelToActiveBrand(brandId, modelValue): string {
+  addModelToActiveBrand(brandId, modelValue): void {
     let result: any;
     this.model = modelValue;
     this.afs.collection('vehiclemaster')
     .doc(brandId).collection('model')
     .add({modelname: this.model})
     .then( docRef => {
-      result = 'succes';
+      result = 'success';
     }).catch( error => {
-      result = error;
+      result = 'Something went wrong';
     });
-    return result;
   }
-
 }
