@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import {MatSort, MatPaginator, MatTableDataSource} from '@angular/material';
+import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
+import {MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FirestoreDataService } from './../../firestore-data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-models-list',
@@ -16,7 +16,7 @@ export class ModelsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor( private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute) { }
+  constructor( private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe( params => {
@@ -29,14 +29,27 @@ export class ModelsListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  goToAddModel() {
+    this.router.navigate(['/add-model', this.id ]);
+
+    //this.route.navigate(['add-model', {brandId: this.id}]);
+  }
+
   showAllModels(brandId) {
     this._firestoreDataService.getModelDetailByBrand(brandId).subscribe(data => {
       this.modelsDataSource = new MatTableDataSource(data);
       this.modelsColumns = ['id', 'modelname', 'variants'];
       this.modelsDataSource.sort = this.sort;
       this.modelsDataSource.paginator = this.paginator;
-      console.log('Models List is ', this.modelsDataSource);
+      console.log('Models List is ', data);
+      data.forEach(element => {
+        console.log(element.variants[0]);
+      });
     });
+  }
+
+  openDialogToAddModel() {
+
   }
 
 }

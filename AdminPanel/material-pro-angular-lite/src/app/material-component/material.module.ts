@@ -33,6 +33,7 @@ import { TableListComponent } from './table-list/table-list.component';
 import { VehicleMasterListComponent } from './vehicle-master-list/vehicle-master-list.component';
 import { ModelsListComponent } from './models-list/models-list.component';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AddModelComponent } from './add-model/add-model.component';
 
 @NgModule({
   imports: [
@@ -73,7 +74,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     SliderComponent,
     SlideToggleComponent,
     VehicleMasterListComponent,
-    ModelsListComponent
+    ModelsListComponent,
+    AddModelComponent
   ]
 })
 

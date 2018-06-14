@@ -1,3 +1,4 @@
+import { AddModelComponent } from './add-model/add-model.component';
 import { Routes } from '@angular/router';
 
 import { ButtonsComponent } from './buttons/buttons.component';
@@ -30,6 +31,9 @@ export const MaterialRoutes: Routes = [
     }, {
       path: 'table-list',
       component: TableListComponent
+    }, {
+      path: 'add-model/:brandId',
+      component: AddModelComponent
     }, {
       path: 'models-list/:id',
       component: ModelsListComponent
