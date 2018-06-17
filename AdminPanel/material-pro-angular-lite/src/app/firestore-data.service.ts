@@ -34,6 +34,20 @@ export class FirestoreDataService implements OnInit {
     return this.vehicles;
   }
 
+  getAllModels(brandId): Observable<any> {
+    this.models = this.afs.collection<Vehicle>('vehiclemaster')
+    .doc(brandId).collection<Model>('model')
+    .snapshotChanges()
+    .map(actions => {
+      return actions.map(action => {
+        const data = action.payload.doc.data() as Model;
+        const id = action.payload.doc.id;
+        return { id, ...data} ;
+      });
+    });
+    return this.models;
+  }
+  /*
   getModelDetailByBrand(brandId): Observable<any> {
     this.models = this.afs
       .collection<Vehicle>('vehiclemaster')
@@ -69,13 +83,26 @@ export class FirestoreDataService implements OnInit {
       });
     return this.models;
   }
+*/
+  addVehicleBrand(brandValue, selectedVehicleType): void {
+    console.log(brandValue);
+    console.log(selectedVehicleType);
+    let result: any;
+    this.afs.collection('vehiclemaster')
+    .add({'brand': brandValue, 'vehicletype': selectedVehicleType})
+    .then( docRef => {
+      result = 'success';
+    }).catch( error => {
+      result = 'Something went wrong';
+    });
+  }
 
-  addModelToActiveBrand(brandId, modelValue): void {
+  addModelToActiveBrand(brandId, modelValue, selectedVariants): void {
     let result: any;
     this.model = modelValue;
     this.afs.collection('vehiclemaster')
     .doc(brandId).collection('model')
-    .add({modelname: this.model})
+    .add({modelname: this.model, variants: selectedVariants})
     .then( docRef => {
       result = 'success';
     }).catch( error => {

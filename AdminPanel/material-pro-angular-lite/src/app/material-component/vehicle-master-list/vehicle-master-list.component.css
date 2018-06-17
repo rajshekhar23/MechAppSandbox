@@ -13,4 +13,5 @@ table {
 
 .tableTitle {
   margin:6px auto;
+  float: left;
 }

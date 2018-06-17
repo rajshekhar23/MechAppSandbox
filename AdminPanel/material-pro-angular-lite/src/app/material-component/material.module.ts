@@ -28,11 +28,11 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
-import { TableListComponent } from './table-list/table-list.component';
 import { VehicleMasterListComponent } from './vehicle-master-list/vehicle-master-list.component';
 import { ModelsListComponent } from './models-list/models-list.component';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AddModelComponent } from './add-model/add-model.component';
+import { AddVehicleBrandComponent } from './add-vehicle-brand/add-vehicle-brand.component';
 
 @NgModule({
   imports: [
@@ -58,7 +58,6 @@ import { AddModelComponent } from './add-model/add-model.component';
     ListsComponent,
     MenuComponent,
     TabsComponent,
-    TableListComponent,
     StepperComponent,
     ExpansionComponent,
     ChipsComponent,
@@ -73,7 +72,8 @@ import { AddModelComponent } from './add-model/add-model.component';
     SlideToggleComponent,
     VehicleMasterListComponent,
     ModelsListComponent,
-    AddModelComponent
+    AddModelComponent,
+    AddVehicleBrandComponent
   ]
 })
 

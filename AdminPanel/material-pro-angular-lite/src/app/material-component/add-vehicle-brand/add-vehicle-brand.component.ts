@@ -5,24 +5,24 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
-@Component({
-  selector: 'app-add-model',
-  templateUrl: './add-model.component.html',
-  styleUrls: ['./add-model.component.css']
-})
 
-export class AddModelComponent implements OnInit {
-  modelname = new FormControl('', [Validators.required]);
+@Component({
+  selector: 'app-add-vehicle-brand',
+  templateUrl: './add-vehicle-brand.component.html',
+  styleUrls: ['./add-vehicle-brand.component.css']
+})
+export class AddVehicleBrandComponent implements OnInit {
+  brandname = new FormControl('', [Validators.required]);
   brandId: any;
   private sub: any;
-  variants = new FormControl('', [Validators.required]);
-  selectedVarinats: any;
-  variantsList = ['PETROL', 'PETROL-V', 'PETROL-T', 'DIESEL', 'OTHER', 'BOTH'];
+  vehicletype = new FormControl('', [Validators.required]);
+  selectedVehicleType: any;
+  vehicleTypeList = ['2-Wheeler', '4-Wheeler'];
 
   constructor(private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute,
   private snackBar: MatSnackBar, private router: Router) {
-    this.variants.valueChanges.subscribe((value) => {
-      this.selectedVarinats = value;
+    this.vehicletype.valueChanges.subscribe((value) => {
+      this.selectedVehicleType = value;
     });
   }
 
@@ -33,17 +33,16 @@ export class AddModelComponent implements OnInit {
   }
 
   getErrorMessage() {
-    if (this.modelname.hasError('required') || this.variants.hasError('required')) {
+    if (this.brandname.hasError('required') || this.vehicletype.hasError('required')) {
       return 'You must enter a value';
     }
   }
 
-  addModel(): void {
-    this._firestoreDataService.addModelToActiveBrand(this.brandId, this.modelname.value, this.selectedVarinats);
+  addVehicleBrand(): void {
+    this._firestoreDataService.addVehicleBrand(this.brandname.value, this.selectedVehicleType);
     this.snackBar.open('Notification', 'Model Added Successfully.', {
       duration: 2000,
     });
-    this.router.navigate(['/models-list', this.brandId]);
+    this.router.navigate(['/vehicle-master-list']);
   }
-
 }

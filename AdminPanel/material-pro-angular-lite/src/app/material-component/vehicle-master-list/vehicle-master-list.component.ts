@@ -22,7 +22,7 @@ export class VehicleMasterListComponent implements OnInit {
   ngOnInit() {
     this._firestoreDataService.getVehicleMasterList().subscribe( data => {
       this.brandDataSource = new MatTableDataSource(data);
-      this.brandColumns = ['id', 'brand', 'action'];
+      this.brandColumns = ['id', 'brand', 'vehicletype', 'action'];
       this.brandDataSource.sort = this.sort;
       this.brandDataSource.paginator = this.paginator;
       console.log('vehicleMaster List is ', this.brandDataSource);

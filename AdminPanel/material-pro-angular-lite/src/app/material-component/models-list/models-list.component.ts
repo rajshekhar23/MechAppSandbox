@@ -31,20 +31,15 @@ export class ModelsListComponent implements OnInit, OnDestroy {
 
   goToAddModel() {
     this.router.navigate(['/add-model', this.id ]);
-
-    //this.route.navigate(['add-model', {brandId: this.id}]);
   }
 
   showAllModels(brandId) {
-    this._firestoreDataService.getModelDetailByBrand(brandId).subscribe(data => {
+    this._firestoreDataService.getAllModels(brandId).subscribe(data => {
       this.modelsDataSource = new MatTableDataSource(data);
       this.modelsColumns = ['id', 'modelname', 'variants'];
       this.modelsDataSource.sort = this.sort;
       this.modelsDataSource.paginator = this.paginator;
       console.log('Models List is ', data);
-      data.forEach(element => {
-        console.log(element.variants[0]);
-      });
     });
   }
 
