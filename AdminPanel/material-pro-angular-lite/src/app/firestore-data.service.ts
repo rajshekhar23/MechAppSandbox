@@ -109,4 +109,54 @@ export class FirestoreDataService implements OnInit {
       result = 'Something went wrong';
     });
   }
+
+  updateVehicleBrand(brandId, brandname, selectedType) {
+    console.log('params', brandId + ' ## ' + brandname + ' ## ' + selectedType);
+    let result: any;
+    this.afs.collection('vehiclemaster').doc(brandId)
+    .set({
+      brand: brandname,
+      vehicletype: selectedType
+    }).then( docRef => {
+      result = 'success';
+    }).catch( error => {
+      result = 'Something went wrong';
+    });
+  }
+
+  updateModel(brandId, modelId, modelname, selectedVariants) {
+    let result: any;
+    this.afs.collection('vehiclemaster')
+    .doc(brandId).collection('model').doc(modelId)
+    .set({
+      modelname: modelname,
+      variants: selectedVariants
+    }).then( docRef => {
+      result = 'success';
+    }).catch( error => {
+      result = 'Something went wrong';
+    });
+  }
+
+  removeBrand(brandId) {
+    let result: any;
+    this.afs.collection('vehiclemaster')
+    .doc(brandId).delete().then( docRef => {
+      result = 'success';
+    }).catch( error => {
+      result = 'Something went wrong';
+    });
+  }
+
+  removeModel(brandId, modelId) {
+    let result: any;
+    this.afs.collection('vehiclemaster').
+    doc(brandId).collection('model').doc(modelId)
+    .delete().then( docRef => {
+      result = 'success';
+    }).catch( error => {
+      result = 'Something went wrong';
+    });
+  }
+
 }

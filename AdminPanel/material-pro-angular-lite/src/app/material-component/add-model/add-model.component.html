@@ -17,12 +17,13 @@
             (+{{variants.value.length - 1}} others)
           </span>
         </mat-select-trigger>
-        <mat-option *ngFor="let topping of variantsList" [value]="topping">{{topping}}</mat-option>
+        <mat-option *ngFor="let variant of variantsList" [value]="variant">{{variant}}</mat-option>
       </mat-select>
       <mat-error *ngIf="variants.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions class="buttonWrapper">
-    <button mat-raised-button color="warn" (click)="addModel()" class="btnAddModel">Add Model</button>
+    <button mat-raised-button color="warn" (click)='addModel()' *ngIf="!isUpdateActive" class="btnAddModel">Add Model</button>
+    <button mat-raised-button color="warn" (click)='updateModel()' *ngIf="isUpdateActive" class="btnAddModel">Update Model</button>
   </mat-card-actions>
 </mat-card>

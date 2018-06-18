@@ -16,17 +16,25 @@ export class AddModelComponent implements OnInit {
   brandId: any;
   private sub: any;
   variants = new FormControl('', [Validators.required]);
-  selectedVarinats: any;
+  selectedVariants: any;
   variantsList = ['PETROL', 'PETROL-V', 'PETROL-T', 'DIESEL', 'OTHER', 'BOTH'];
-
+  isUpdateActive: any;
+  model: any;
   constructor(private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute,
   private snackBar: MatSnackBar, private router: Router) {
     this.variants.valueChanges.subscribe((value) => {
-      this.selectedVarinats = value;
+      this.selectedVariants = value;
     });
   }
 
   ngOnInit() {
+    if (localStorage.getItem('model')) {
+      this.isUpdateActive = true;
+      this.model = JSON.parse(localStorage.getItem('model'));
+      this.modelname.setValue(this.model.modelname);
+    } else {
+      this.isUpdateActive = false;
+    }
     this.sub = this.route.params.subscribe( params => {
       this.brandId = params['brandId'];
     });
@@ -39,11 +47,20 @@ export class AddModelComponent implements OnInit {
   }
 
   addModel(): void {
-    this._firestoreDataService.addModelToActiveBrand(this.brandId, this.modelname.value, this.selectedVarinats);
+    this._firestoreDataService.addModelToActiveBrand(this.brandId, this.modelname.value, this.selectedVariants);
     this.snackBar.open('Notification', 'Model Added Successfully.', {
       duration: 2000,
     });
     this.router.navigate(['/models-list', this.brandId]);
+  }
+
+  updateModel(): void {
+    this._firestoreDataService.updateModel(this.model.brandId, this.model.id, this.modelname.value, this.selectedVariants);
+    this.snackBar.open('Notification', 'Model updated successfully.', {
+      duration: 2000,
+    });
+    localStorage.clear();
+    this.router.navigate(['/models-list', this.model.brandId]);
   }
 
 }

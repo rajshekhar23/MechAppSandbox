@@ -15,9 +15,11 @@ export class AddVehicleBrandComponent implements OnInit {
   brandname = new FormControl('', [Validators.required]);
   brandId: any;
   private sub: any;
+  vehicle: any;
+  isUpdateActive: any;
   vehicletype = new FormControl('', [Validators.required]);
   selectedVehicleType: any;
-  vehicleTypeList = ['2-Wheeler', '4-Wheeler'];
+  vehicleTypeList = ['2-Wheeler', '4-Wheeler', 'Both'];
 
   constructor(private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute,
   private snackBar: MatSnackBar, private router: Router) {
@@ -27,6 +29,14 @@ export class AddVehicleBrandComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('vehicle')) {
+      this.isUpdateActive = true;
+      this.vehicle = JSON.parse(localStorage.getItem('vehicle'));
+      this.brandname.setValue(this.vehicle.brand);
+      this.vehicletype.setValue(this.vehicle.vehicletype.type);
+    } else {
+      this.isUpdateActive = false;
+    }
     this.sub = this.route.params.subscribe( params => {
       this.brandId = params['brandId'];
     });
@@ -45,4 +55,14 @@ export class AddVehicleBrandComponent implements OnInit {
     });
     this.router.navigate(['/vehicle-master-list']);
   }
+
+  updateVehicleBrand(): void {
+    this._firestoreDataService.updateVehicleBrand(this.vehicle.id, this.brandname.value, this.selectedVehicleType);
+    this.snackBar.open('Notification', 'Brand updated successfully.', {
+      duration: 2000,
+    });
+    localStorage.clear();
+    this.router.navigate(['/vehicle-master-list']);
+  }
+
 }

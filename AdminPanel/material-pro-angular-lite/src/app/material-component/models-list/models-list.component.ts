@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
-import {MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FirestoreDataService } from './../../firestore-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +16,8 @@ export class ModelsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor( private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute, private router: Router) { }
+  constructor( private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute, private router: Router,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe( params => {
@@ -36,15 +37,29 @@ export class ModelsListComponent implements OnInit, OnDestroy {
   showAllModels(brandId) {
     this._firestoreDataService.getAllModels(brandId).subscribe(data => {
       this.modelsDataSource = new MatTableDataSource(data);
-      this.modelsColumns = ['id', 'modelname', 'variants'];
+      this.modelsColumns = ['id', 'modelname', 'variants', 'edit', 'remove'];
       this.modelsDataSource.sort = this.sort;
       this.modelsDataSource.paginator = this.paginator;
       console.log('Models List is ', data);
     });
   }
 
-  openDialogToAddModel() {
+  editModel(model) {
+    localStorage.removeItem('model');
+    model.brandId = this.id;
+    localStorage.setItem('model', JSON.stringify(model));
+    console.log(localStorage.getItem('model'));
+    this.router.navigate(['/edit-model']);
+  }
 
+  removeModel(model) {
+    if (confirm('Are you sure to remove')) {
+      this._firestoreDataService.removeModel(this.id, model.id);
+      this.snackBar.open('Notification', 'Model removed sucessfully.', {
+        duration: 2000,
+      });
+
+    }
   }
 
 }
