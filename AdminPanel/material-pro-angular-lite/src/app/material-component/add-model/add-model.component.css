@@ -21,3 +21,12 @@ button.mat-raised-button {
   opacity: 0.75;
   font-size: 0.75em;
 }
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.example-radio-button {
+  margin: 5px;
+}

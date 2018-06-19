@@ -1,3 +1,4 @@
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { Router } from '@angular/router';
 import { Model } from './../../models/models';
 import { FirestoreDataService } from './../../firestore-data.service';
@@ -19,10 +20,11 @@ export class VehicleMasterListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor( private _firestoreDataService: FirestoreDataService, private router: Router,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private _loadingBar: SlimLoadingBarService) { }
 
   ngOnInit() {
     this._firestoreDataService.getVehicleMasterList().subscribe( data => {
+      this._loadingBar.complete();
       this.brandDataSource = new MatTableDataSource(data);
       this.brandColumns = ['id', 'brand', 'vehicletype', 'edit', 'remove', 'showmodel'];
       this.brandDataSource.sort = this.sort;
@@ -47,4 +49,8 @@ export class VehicleMasterListComponent implements OnInit {
     }
   }
 
+  addVehicleBrand() {
+    localStorage.clear();
+    this.router.navigate(['/add-vehicle-brand']);
+  }
 }

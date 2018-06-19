@@ -1,3 +1,4 @@
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -16,11 +17,13 @@ export class FirestoreDataService implements OnInit {
   models: Observable<Model[]>;
   model: Model;
   vehicle: Vehicle;
-  constructor(private afs: AngularFirestore, private db: AngularFireDatabase) {}
+  constructor(private afs: AngularFirestore, private db: AngularFireDatabase,
+  private _loadingBar: SlimLoadingBarService) {}
 
   ngOnInit() {}
 
   getVehicleMasterList(): Observable<any> {
+    this._loadingBar.start();
     this.vehicles = this.afs
       .collection<Vehicle>('vehiclemaster')
       .snapshotChanges()
@@ -35,6 +38,7 @@ export class FirestoreDataService implements OnInit {
   }
 
   getAllModels(brandId): Observable<any> {
+    this._loadingBar.start();
     this.models = this.afs.collection<Vehicle>('vehiclemaster')
     .doc(brandId).collection<Model>('model')
     .snapshotChanges()
@@ -97,12 +101,13 @@ export class FirestoreDataService implements OnInit {
     });
   }
 
-  addModelToActiveBrand(brandId, modelValue, selectedVariants): void {
+  addModelToActiveBrand(brandId, modelValue, variantValue, selectedFuelType): void {
+    alert(brandId);
     let result: any;
     this.model = modelValue;
     this.afs.collection('vehiclemaster')
     .doc(brandId).collection('model')
-    .add({modelname: this.model, variants: selectedVariants})
+    .add({modelname: this.model, variantname: variantValue, fueltype: selectedFuelType})
     .then( docRef => {
       result = 'success';
     }).catch( error => {
@@ -124,13 +129,14 @@ export class FirestoreDataService implements OnInit {
     });
   }
 
-  updateModel(brandId, modelId, modelname, selectedVariants) {
+  updateModel(brandId, modelId, modelname, variantname, selectedFuelType) {
     let result: any;
     this.afs.collection('vehiclemaster')
     .doc(brandId).collection('model').doc(modelId)
     .set({
       modelname: modelname,
-      variants: selectedVariants
+      variantname: variantname,
+      fueltype: selectedFuelType
     }).then( docRef => {
       result = 'success';
     }).catch( error => {

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
@@ -20,6 +20,8 @@ import { AngularFireModule} from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { DataTablesModule } from 'angular-datatables';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -41,13 +43,18 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    DataTablesModule
+    DataTablesModule,
+    SlimLoadingBarModule.forRoot()
   ],
   providers: [
   {
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: LoaderInterceptor,
+    multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

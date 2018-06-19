@@ -11,12 +11,12 @@ import { AppSidebarComponent } from './sidebar/sidebar.component';
   selector: 'app-full-layout',
   templateUrl: 'full.component.html',
   styleUrls: [],
-}) 
+})
 export class FullComponent implements OnDestroy, AfterViewInit {
-  mobileQuery: MediaQueryList;    
-      
+  mobileQuery: MediaQueryList;
+
   private _mobileQueryListener: () => void;
-  
+
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public menuItems: MenuItems) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -27,7 +27,7 @@ export class FullComponent implements OnDestroy, AfterViewInit {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
  ngAfterViewInit() {
-     
- } 
-   
+
+ }
+
 }

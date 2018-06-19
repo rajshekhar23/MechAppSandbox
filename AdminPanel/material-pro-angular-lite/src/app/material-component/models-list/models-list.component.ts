@@ -1,3 +1,4 @@
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FirestoreDataService } from './../../firestore-data.service';
@@ -17,7 +18,7 @@ export class ModelsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor( private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute, private router: Router,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private _loadingBar: SlimLoadingBarService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe( params => {
@@ -31,13 +32,15 @@ export class ModelsListComponent implements OnInit, OnDestroy {
   }
 
   goToAddModel() {
+    localStorage.clear();
     this.router.navigate(['/add-model', this.id ]);
   }
 
   showAllModels(brandId) {
     this._firestoreDataService.getAllModels(brandId).subscribe(data => {
+      this._loadingBar.complete();
       this.modelsDataSource = new MatTableDataSource(data);
-      this.modelsColumns = ['id', 'modelname', 'variants', 'edit', 'remove'];
+      this.modelsColumns = ['id', 'modelname', 'variantname', 'fueltype', 'edit', 'remove'];
       this.modelsDataSource.sort = this.sort;
       this.modelsDataSource.paginator = this.paginator;
       console.log('Models List is ', data);

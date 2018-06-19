@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="brandListWrapper">
     <h3 class="tableTitle">Vehicle Brand List</h3>
-    <button mat-raised-button color="warn" [routerLink]="['/add-vehicle-brand']" class="goToBrandList" matTooltip="Show All Brand List">Add Vehicle Brand</button>
+    <button mat-raised-button color="warn" (click)='addVehicleBrand()' class="goToBrandList" matTooltip="Show All Brand List">Add Vehicle Brand</button>
     <table mat-table [dataSource]="brandDataSource" matSort class="mat-elevation-z8">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
@@ -36,6 +36,6 @@
       <tr mat-header-row *matHeaderRowDef="brandColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: brandColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="20" showFirstLastButtons></mat-paginator>
   </div>
 </div>

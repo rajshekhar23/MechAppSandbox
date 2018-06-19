@@ -13,25 +13,25 @@ import { MatSnackBar } from '@angular/material';
 
 export class AddModelComponent implements OnInit {
   modelname = new FormControl('', [Validators.required]);
+  variantname = new FormControl('', [Validators.required]);
+  selectedFuelType: string;
   brandId: any;
-  private sub: any;
-  variants = new FormControl('', [Validators.required]);
-  selectedVariants: any;
-  variantsList = ['PETROL', 'PETROL-V', 'PETROL-T', 'DIESEL', 'OTHER', 'BOTH'];
+  sub: any;
+  fuelTypesList = ['Petrol', 'Diesel', 'CNG', 'Other'];
   isUpdateActive: any;
   model: any;
   constructor(private _firestoreDataService: FirestoreDataService, private route: ActivatedRoute,
   private snackBar: MatSnackBar, private router: Router) {
-    this.variants.valueChanges.subscribe((value) => {
-      this.selectedVariants = value;
-    });
   }
 
   ngOnInit() {
+    this.selectedFuelType = 'Other';
     if (localStorage.getItem('model')) {
       this.isUpdateActive = true;
       this.model = JSON.parse(localStorage.getItem('model'));
       this.modelname.setValue(this.model.modelname);
+      this.variantname.setValue(this.model.variantname);
+      this.selectedFuelType = this.model.fueltype;
     } else {
       this.isUpdateActive = false;
     }
@@ -41,13 +41,13 @@ export class AddModelComponent implements OnInit {
   }
 
   getErrorMessage() {
-    if (this.modelname.hasError('required') || this.variants.hasError('required')) {
+    if (this.modelname.hasError('required') || this.modelname.hasError('required')) {
       return 'You must enter a value';
     }
   }
 
   addModel(): void {
-    this._firestoreDataService.addModelToActiveBrand(this.brandId, this.modelname.value, this.selectedVariants);
+    this._firestoreDataService.addModelToActiveBrand(this.brandId, this.modelname.value, this.variantname.value, this.selectedFuelType);
     this.snackBar.open('Notification', 'Model Added Successfully.', {
       duration: 2000,
     });
@@ -55,7 +55,8 @@ export class AddModelComponent implements OnInit {
   }
 
   updateModel(): void {
-    this._firestoreDataService.updateModel(this.model.brandId, this.model.id, this.modelname.value, this.selectedVariants);
+    this._firestoreDataService.updateModel(this.model.brandId, this.model.id, this.modelname.value, this.variantname.value,
+      this.selectedFuelType);
     this.snackBar.open('Notification', 'Model updated successfully.', {
       duration: 2000,
     });

@@ -1,4 +1,5 @@
 export interface Model {
   modelname: string;
-  variants: string[];
+  variantname: string;
+  fueltype: string;
 }

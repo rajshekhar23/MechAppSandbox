@@ -8,7 +8,8 @@ export interface Menu {
 }
 
 const MENUITEMS = [
-    {state: 'vehicle-master-list', name: 'Vehicle Master List', type: 'link', icon: 'view_comfy' }
+    {state: 'vehicle-master-list', name: 'Vehicle Master List', type: 'link', icon: 'view_comfy' },
+    {state: '/', name: 'Vehicle Master List', type: 'link', icon: 'view_comfy' }
 /*     {state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5'},
     {state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy'},
     {state: 'lists', type: 'link', name: 'Lists', icon: 'view_list'},
